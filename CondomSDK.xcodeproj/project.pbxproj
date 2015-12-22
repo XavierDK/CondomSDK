@@ -8,12 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		25D1C7FD1C2984A500ED6C99 /* CondomSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 25D1C7FC1C2984A500ED6C99 /* CondomSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		25D1C8051C2984B700ED6C99 /* CondomSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D1C8041C2984B700ED6C99 /* CondomSDK.swift */; };
+		745C11380F209BECD894C325 /* Pods_CondomSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7F2B7A3A82C71F929CDEB32 /* Pods_CondomSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		25D1C7F91C2984A500ED6C99 /* CondomSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CondomSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D1C7FC1C2984A500ED6C99 /* CondomSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CondomSDK.h; sourceTree = "<group>"; };
 		25D1C7FE1C2984A500ED6C99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25D1C8041C2984B700ED6C99 /* CondomSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CondomSDK.swift; sourceTree = "<group>"; };
+		9B3E372224226FF68BF92CC7 /* Pods-CondomSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CondomSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CondomSDK/Pods-CondomSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		B7F2B7A3A82C71F929CDEB32 /* Pods_CondomSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CondomSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0DB9AA1065908A4379EFFF1 /* Pods-CondomSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CondomSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-CondomSDK/Pods-CondomSDK.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -21,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				745C11380F209BECD894C325 /* Pods_CondomSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,6 +39,8 @@
 			children = (
 				25D1C7FB1C2984A500ED6C99 /* CondomSDK */,
 				25D1C7FA1C2984A500ED6C99 /* Products */,
+				F34812ABFED761423A781B6F /* Pods */,
+				EDB9B038EDAADB67143B0F75 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -48,8 +57,26 @@
 			children = (
 				25D1C7FC1C2984A500ED6C99 /* CondomSDK.h */,
 				25D1C7FE1C2984A500ED6C99 /* Info.plist */,
+				25D1C8041C2984B700ED6C99 /* CondomSDK.swift */,
 			);
 			path = CondomSDK;
+			sourceTree = "<group>";
+		};
+		EDB9B038EDAADB67143B0F75 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B7F2B7A3A82C71F929CDEB32 /* Pods_CondomSDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F34812ABFED761423A781B6F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9B3E372224226FF68BF92CC7 /* Pods-CondomSDK.debug.xcconfig */,
+				C0DB9AA1065908A4379EFFF1 /* Pods-CondomSDK.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -70,10 +97,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 25D1C8011C2984A500ED6C99 /* Build configuration list for PBXNativeTarget "CondomSDK" */;
 			buildPhases = (
+				959389E0A61A3ECD40FF557D /* Check Pods Manifest.lock */,
 				25D1C7F41C2984A500ED6C99 /* Sources */,
 				25D1C7F51C2984A500ED6C99 /* Frameworks */,
 				25D1C7F61C2984A500ED6C99 /* Headers */,
 				25D1C7F71C2984A500ED6C99 /* Resources */,
+				6F2C83E94A5B142B23098EB1 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -125,11 +154,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6F2C83E94A5B142B23098EB1 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CondomSDK/Pods-CondomSDK-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		959389E0A61A3ECD40FF557D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		25D1C7F41C2984A500ED6C99 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25D1C8051C2984B700ED6C99 /* CondomSDK.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,7 +290,9 @@
 		};
 		25D1C8021C2984A500ED6C99 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B3E372224226FF68BF92CC7 /* Pods-CondomSDK.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -238,12 +303,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = PagesJaunes.CondomSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		25D1C8031C2984A500ED6C99 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C0DB9AA1065908A4379EFFF1 /* Pods-CondomSDK.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -276,6 +344,7 @@
 				25D1C8031C2984A500ED6C99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
