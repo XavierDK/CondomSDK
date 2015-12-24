@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CondomSDK-Swift.h"
 
 //! Project version number for CondomSDK.
 FOUNDATION_EXPORT double CondomSDKVersionNumber;

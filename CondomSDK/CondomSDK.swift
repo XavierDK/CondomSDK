@@ -25,6 +25,7 @@ import Foundation
   }
   
   @objc public func resetDatas() {
+    
     self.datas.removeAll()
   }
   
