@@ -17,7 +17,7 @@ import Alamofire
   
   private lazy var datas: [String: String] = [String: String]()
   private var timer: NSTimer?
-
+  
   private var testingEnable: Bool = false
   private var idTest: String?
   private var url: NSURL?
@@ -51,15 +51,17 @@ import Alamofire
   
   @objc public func setTestValue(value: String, forKey key: String) {
     
-    if timer != nil {
-      timer?.invalidate()
-      timer = nil
-    }
-    
-    datas[key] = value
-    
-    if self.checkExpectedKeys() == true {
-      self.launchSendingTimer()
+    if self.testingEnable == true {
+      if timer != nil {
+        timer?.invalidate()
+        timer = nil
+      }
+      
+      datas[key] = value
+      
+      if self.checkExpectedKeys() == true {
+        self.launchSendingTimer()
+      }
     }
   }
   
@@ -95,7 +97,7 @@ import Alamofire
       }
       if let paramsList = params["paramsList"] {
         let expectedParams = paramsList.componentsSeparatedByString(",")
-          self.expectedKeys = expectedParams
+        self.expectedKeys = expectedParams
       }
     }
   }
