@@ -102,7 +102,7 @@ import Alamofire
   
   private func launchSendingTimer() {
     
-    self.timer = NSTimer.scheduledTimerWithTimeInterval(timerDuration, target: self, selector: "sendDatas:", userInfo: nil, repeats: false)
+    self.timer = NSTimer.scheduledTimerWithTimeInterval(timerDuration, target: self, selector: "sendDatas", userInfo: nil, repeats: false)
   }
   
   private func createJSONObject() -> [String : AnyObject] {
@@ -123,7 +123,7 @@ import Alamofire
     return res
   }
   
-  private func sendDatas(sender: AnyObject) {
+  func sendDatas() {
     
     if let url = serverUrl {
       let request = NSMutableURLRequest(URL: url)
