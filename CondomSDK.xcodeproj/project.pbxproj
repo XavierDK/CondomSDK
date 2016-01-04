@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25B0B0301C3A82350014A4F1 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B0B02F1C3A82350014A4F1 /* NSURLExtension.swift */; };
 		25D1C7FD1C2984A500ED6C99 /* CondomSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 25D1C7FC1C2984A500ED6C99 /* CondomSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		25D1C8051C2984B700ED6C99 /* CondomSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D1C8041C2984B700ED6C99 /* CondomSDK.swift */; };
 		745C11380F209BECD894C325 /* Pods_CondomSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7F2B7A3A82C71F929CDEB32 /* Pods_CondomSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		25B0B02F1C3A82350014A4F1 /* NSURLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtension.swift; sourceTree = "<group>"; };
 		25D1C7F91C2984A500ED6C99 /* CondomSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CondomSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D1C7FC1C2984A500ED6C99 /* CondomSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CondomSDK.h; sourceTree = "<group>"; };
 		25D1C7FE1C2984A500ED6C99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 				25D1C7FC1C2984A500ED6C99 /* CondomSDK.h */,
 				25D1C7FE1C2984A500ED6C99 /* Info.plist */,
 				25D1C8041C2984B700ED6C99 /* CondomSDK.swift */,
+				25B0B02F1C3A82350014A4F1 /* NSURLExtension.swift */,
 			);
 			path = CondomSDK;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25B0B0301C3A82350014A4F1 /* NSURLExtension.swift in Sources */,
 				25D1C8051C2984B700ED6C99 /* CondomSDK.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
