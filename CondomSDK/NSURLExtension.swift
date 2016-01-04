@@ -9,17 +9,20 @@
 import Foundation
 
 extension NSURL {
-  
-  var fragments: [String: String] {
-    var results = [String: String]()
-    if let pairs = self.fragment?.componentsSeparatedByString("&") where pairs.count > 0 {
-      for pair: String in pairs {
-        if let keyValue = pair.componentsSeparatedByString("=") as [String]? {
-          if(keyValue.count > 1) {
-            results.updateValue(keyValue[1], forKey: keyValue[0])
-          }
+  func getKeyVals() -> Dictionary<String, String>? {
+    var results = [String:String]()
+    let keyValues = self.query?.componentsSeparatedByString("&")
+    if keyValues?.count > 0 {
+      for pair in keyValues! {
+        let kv = pair.componentsSeparatedByString("=")
+        if kv.count > 1 {
+          results.updateValue(kv[1], forKey: kv[0])
+        }
+        else if kv.count == 1 {
+          results.updateValue("", forKey: kv[0])
         }
       }
+      
     }
     return results
   }

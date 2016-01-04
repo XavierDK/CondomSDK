@@ -16,10 +16,11 @@ import Alamofire
   private let timerDuration : NSTimeInterval = 10
   
   private lazy var datas: [String: String] = [String: String]()
-  private var keys: [String] = [String]()
   private var timer: NSTimer?
-  
+
+  private var testingEnable: Bool = false
   private var idTest: String?
+  private var url: NSURL?
   private var serverUrl: NSURL?
   private lazy var expectedKeys: [String] = [String]()
   private var killApp: Bool = false
@@ -33,13 +34,19 @@ import Alamofire
   
   @objc public func setTestURL(url: NSURL) {
     
-    self.resetDatas()    
+    self.resetDatas()
     self.parseURL(url)
   }
   
   @objc public func resetDatas() {
     
     self.datas.removeAll()
+    self.testingEnable = false
+    self.idTest = nil
+    self.serverUrl = nil
+    self.expectedKeys = [String]()
+    self.killApp = false
+    self.screenshot = false
   }
   
   @objc public func setTestValue(value: String, forKey key: String) {
@@ -51,7 +58,7 @@ import Alamofire
     
     datas[key] = value
     
-    if self.checkExpectedKeys() {
+    if self.checkExpectedKeys() == true {
       self.launchSendingTimer()
     }
   }
@@ -67,15 +74,53 @@ import Alamofire
   }
   
   private func parseURL(url: NSURL) {
-  
-    //pagesjaunes://pj.fr/fd?e=07702354&debug&screenshot&killApp&idTest=second_test&serverUrl=%22http%3A%2F%2F10.234.226.106%3A8080%2F%2FexternalLink%22&paramsList=%22topScreenName,codeEtab%22
     
-    print(url.fragments)
+    let params = url.getKeyVals()
+    
+    if let params = params {
+      if params["debug"] != nil {
+        testingEnable = true
+      }
+      if params["killApp"] != nil {
+        killApp = true
+      }
+      if params["screenshot"] != nil {
+        screenshot = true
+      }
+      if let serverUrl = params["serverUrl"] {
+        self.serverUrl = NSURL(string: serverUrl)
+      }
+      if let idTest = params["idTest"] {
+        self.idTest = idTest
+      }
+      if let paramsList = params["paramsList"] {
+        let expectedParams = paramsList.componentsSeparatedByString(",")
+          self.expectedKeys = expectedParams
+      }
+    }
   }
   
   private func launchSendingTimer() {
     
     self.timer = NSTimer.scheduledTimerWithTimeInterval(timerDuration, target: self, selector: "sendDatas", userInfo: nil, repeats: false)
+  }
+  
+  private func createJSONObject() -> [String : AnyObject] {
+    
+    return ["id" : self.idTest!,
+      "url" : url!,
+      "result" : self.createResultObject()]
+  }
+  
+  private func createResultObject() -> [String: String] {
+    
+    var res = [String: String]()
+    for key in self.expectedKeys {
+      if let data = self.datas[key] {
+        res[key] = data
+      }
+    }
+    return res
   }
   
   private func sendDatas() {
@@ -85,15 +130,13 @@ import Alamofire
       request.HTTPMethod = "POST"
       request.setValue("application/json", forHTTPHeaderField: "Content-Type")
       
-      let values = ["06786984572365", "06644857247565", "06649998782227"]
+      let jsonObject = self.createJSONObject()
       
       do {
-        request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(values, options: [])
+        request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(jsonObject, options: [])
       }
       catch {
-        
       }
-      
       Alamofire.request(request)
         .responseJSON { response in
       }
