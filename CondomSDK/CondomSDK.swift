@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 @objc public class CondomSDK: NSObject {
   
@@ -158,19 +157,19 @@ import Alamofire
   func sendDatas() {
     
     if let url = serverUrl {
-      let request = NSMutableURLRequest(URL: url)
-      request.HTTPMethod = "POST"
-      request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+      let req = NSMutableURLRequest(URL: url)
+      req.HTTPMethod = "POST"
+      req.setValue("application/json", forHTTPHeaderField: "Content-Type")
       
       let jsonObject = self.createJSONObject()
       
       do {
-        request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(jsonObject, options: [])
+        req.HTTPBody = try NSJSONSerialization.dataWithJSONObject(jsonObject, options: [])
       }
       catch {
       }
       
-      Alamofire.request(request)
+      request(req)
         .responseJSON { response in
           
           switch response.result {
