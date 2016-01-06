@@ -25,6 +25,7 @@ import Alamofire
   private lazy var expectedKeys: [String] = [String]()
   private var killApp: Bool = false
   private var screenshot: Bool = false
+  private var timeout: NSTimeInterval?
   
   
   @objc override init() {
@@ -37,6 +38,7 @@ import Alamofire
     self.resetDatas()
     self.url = url
     self.parseURL(url)
+    self.launchTimeout()
   }
   
   @objc public func resetDatas() {
@@ -90,6 +92,10 @@ import Alamofire
       if params["screenshot"] != nil {
         screenshot = true
       }
+      if let timeout = params["timeout"] {
+        self.timeout = Double(timeout)
+      }
+
       if let serverUrl = params["serverUrl"] {
         self.serverUrl = NSURL(string: serverUrl)
       }
@@ -103,9 +109,22 @@ import Alamofire
     }
   }
   
+  private func launchTimeout() {
+    
+    if killApp == true,
+       let timeout = self.timeout {
+      
+      NSTimer.scheduledTimerWithTimeInterval(timeout, target: self, selector: "killAppNow", userInfo: nil, repeats: false)
+    }
+  }
+  
   private func launchSendingTimer() {
     
     self.timer = NSTimer.scheduledTimerWithTimeInterval(timerDuration, target: self, selector: "sendDatas", userInfo: nil, repeats: false)
+  }
+  
+  private func killAppNow() {
+    exit(EXIT_SUCCESS)
   }
   
   private func createJSONObject() -> [String : AnyObject] {
@@ -161,7 +180,7 @@ import Alamofire
             if JSON["status"] as? String == "success" {
               
               if self.killApp == true {
-                exit(EXIT_SUCCESS)
+                self.killAppNow()
               }
             }
             
