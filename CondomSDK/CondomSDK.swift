@@ -35,6 +35,7 @@ import Alamofire
   @objc public func setTestURL(url: NSURL) {
     
     self.resetDatas()
+    self.url = url
     self.parseURL(url)
   }
   
@@ -109,9 +110,19 @@ import Alamofire
   
   private func createJSONObject() -> [String : AnyObject] {
     
-    return ["id" : self.idTest!,
-      "url" : url!,
+    var res: [String: AnyObject] = ["id" : self.idTest!,
+      "url" : "\(url!)",
       "result" : self.createResultObject()]
+    
+    if self.screenshot == true {
+      
+      let image = self.captureScreen()
+      let imageData = UIImagePNGRepresentation(image!)
+      let base64String = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+      res["screenshot"] = base64String
+    }
+    
+    return res
   }
   
   private func createResultObject() -> [String: String] {
@@ -139,9 +150,36 @@ import Alamofire
       }
       catch {
       }
+      
       Alamofire.request(request)
         .responseJSON { response in
+          
+          switch response.result {
+          case .Success(let JSON):
+            print("Success with JSON: \(JSON)")
+            
+            if JSON["status"] as? String == "success" {
+              
+              if self.killApp == true {
+                exit(EXIT_SUCCESS)
+              }
+            }
+            
+          case .Failure(let error):
+            print("Request failed with error: \(error)")
+          }
       }
     }
+  }
+  
+  private func captureScreen() -> UIImage? {
+    
+    var window: UIWindow? = UIApplication.sharedApplication().keyWindow
+    window = UIApplication.sharedApplication().windows[0]
+    UIGraphicsBeginImageContextWithOptions(window!.frame.size, window!.opaque, 0.0)
+    window!.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return image;
   }
 }
