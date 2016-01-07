@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 @objc public class CondomSDK: NSObject {
   
@@ -25,6 +26,10 @@ import Foundation
   private var killApp: Bool = false
   private var screenshot: Bool = false
   private var timeout: NSTimeInterval?
+  private var ciMobKitUrl: String?
+  private var gps: String?
+  
+  private let topScreenNameKey = "topScreenName"
   
   
   @objc override init() {
@@ -70,7 +75,7 @@ import Foundation
   private func checkExpectedKeys() -> Bool {
     
     for key in expectedKeys {
-      if datas[key] == nil {
+      if datas[key] == nil && key != self.topScreenNameKey {
         return false
       }
     }
@@ -91,6 +96,21 @@ import Foundation
       if params["screenshot"] != nil {
         screenshot = true
       }
+      
+      if let gps = params["gps"] {
+        self.gps = gps
+        
+        NSUserDefaults.standardUserDefaults().setValue(self.gps, forKey: "gps")
+      }
+      
+      if let ciMobKitUrl = params["ciMobKitUrl"] {
+        self.ciMobKitUrl = ciMobKitUrl
+        
+        NSUserDefaults.standardUserDefaults().setValue(self.ciMobKitUrl, forKey: "server")
+      }
+      
+      NSUserDefaults.standardUserDefaults().synchronize()
+      
       if let timeout = params["timeout"] {
         self.timeout = Double(timeout)
       }
@@ -104,6 +124,10 @@ import Foundation
       if let paramsList = params["paramsList"] {
         let expectedParams = paramsList.componentsSeparatedByString(",")
         self.expectedKeys = expectedParams
+      }
+      
+      if self.expectedKeys.count == 1 && self.expectedKeys.contains(self.topScreenNameKey) {
+        self.launchSendingTimer()
       }
     }
   }
@@ -156,6 +180,14 @@ import Foundation
   
   func sendDatas() {
     
+    if self.expectedKeys.contains(self.topScreenNameKey) {
+      
+      let topController : UIViewController? = self.topMostController()
+      if let topController = topController {
+        datas[self.topScreenNameKey] = NSStringFromClass(topController.dynamicType)
+      }
+    }
+    
     if let url = serverUrl {
       let req = NSMutableURLRequest(URL: url)
       req.HTTPMethod = "POST"
@@ -174,7 +206,6 @@ import Foundation
           
           switch response.result {
           case .Success(let JSON):
-            print("Success with JSON: \(JSON)")
             
             if JSON["status"] as? String == "success" {
               
@@ -193,11 +224,24 @@ import Foundation
   private func captureScreen() -> UIImage? {
     
     var window: UIWindow? = UIApplication.sharedApplication().keyWindow
-    window = UIApplication.sharedApplication().windows[0]
+    window = UIApplication.sharedApplication().windows.first
     UIGraphicsBeginImageContextWithOptions(window!.frame.size, window!.opaque, 0.0)
     window!.layer.renderInContext(UIGraphicsGetCurrentContext()!)
     let image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     return image;
+  }
+  
+  private func topMostController() -> UIViewController?
+  {
+    var topController = UIApplication.sharedApplication().keyWindow?.rootViewController;
+    
+    if let nvc = topController as? UINavigationController {
+      topController = nvc.viewControllers.last
+    }
+    while (topController?.presentedViewController != nil) {
+      topController = topController?.presentedViewController
+    }
+    return topController;
   }
 }
