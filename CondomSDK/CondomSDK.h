@@ -18,8 +18,9 @@ FOUNDATION_EXPORT const unsigned char CondomSDKVersionString[];
 
 //#if defined(DEBUG)
 
-#define CONDOM_SET_URL(X)           [CondomSDK.sharedInstance setTestURL:X];
-#define CONDOM_SET_KEY_VALUE(X, Y)  [CondomSDK.sharedInstance setTestValue:Y forKey:X];
+#define CONDOM_SET_URL(X)             [CondomSDK.sharedInstance setTestURL:X];
+#define CONDOM_SET_KEY_VALUE(X, Y)    [CondomSDK.sharedInstance setTestValue:Y forKey:X];
+#define CONDOM_EXPECTED_FOR_SUBKEY(X) [CondomSDK.sharedInstance expectedKeysForSubKey:X];
 
 //#else
 //

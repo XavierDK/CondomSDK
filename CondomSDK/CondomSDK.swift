@@ -13,6 +13,8 @@ import UIKit
   
   @objc public static let sharedInstance: CondomSDK = CondomSDK()
   
+  public static let NONE_SUBKEY = "NONE"
+  
   private let timerDuration : NSTimeInterval = 10
   
   private lazy var datas: [String: String] = [String: String]()
@@ -72,6 +74,33 @@ import UIKit
     }
   }
   
+  @objc public func expectedKeysForSubKey(subKey: String) -> Array<String> {
+    
+    var expectedKeys: [String] = [String]()
+    
+    if subKey == CondomSDK.NONE_SUBKEY {
+      for key in self.expectedKeys {
+        
+        if key.containsString(".") == false {
+          expectedKeys.append(key)
+        }
+      }
+    }
+      
+    else {
+      for key in self.expectedKeys {
+        
+        if key.containsString(subKey + ".") {
+          var keyTmp = key
+          keyTmp.removeRange(keyTmp.rangeOfString(subKey + ".")!)
+          expectedKeys.append(keyTmp)
+        }
+      }
+    }
+    
+    return expectedKeys
+  }
+  
   private func checkExpectedKeys() -> Bool {
     
     for key in expectedKeys {
@@ -114,7 +143,7 @@ import UIKit
       if let timeout = params["timeout"] {
         self.timeout = Double(timeout)
       }
-
+      
       if let serverUrl = params["serverUrl"] {
         self.serverUrl = NSURL(string: serverUrl)
       }
@@ -135,9 +164,9 @@ import UIKit
   private func launchTimeout() {
     
     if killApp == true,
-       let timeout = self.timeout {
-      
-      NSTimer.scheduledTimerWithTimeInterval(timeout, target: self, selector: "killAppNow", userInfo: nil, repeats: false)
+      let timeout = self.timeout {
+        
+        NSTimer.scheduledTimerWithTimeInterval(timeout, target: self, selector: "killAppNow", userInfo: nil, repeats: false)
     }
   }
   
