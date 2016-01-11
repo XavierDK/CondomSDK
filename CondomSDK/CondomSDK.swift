@@ -177,7 +177,10 @@ import UIKit
   private func killAppNow() {
 
     if self.killApp == true {
-      exit(EXIT_SUCCESS)
+      
+      dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        exit(EXIT_SUCCESS);
+      });
     }
   }
   
