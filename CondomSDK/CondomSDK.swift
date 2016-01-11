@@ -163,10 +163,9 @@ import UIKit
   
   private func launchTimeout() {
     
-    if killApp == true,
-      let timeout = self.timeout {
+    if let timeout = self.timeout {
         
-        NSTimer.scheduledTimerWithTimeInterval(timeout, target: self, selector: "killAppNow", userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(timeout, target: self, selector: "sendDatas", userInfo: nil, repeats: false)
     }
   }
   
@@ -176,7 +175,10 @@ import UIKit
   }
   
   private func killAppNow() {
-    exit(EXIT_SUCCESS)
+
+    if self.killApp == true {
+      exit(EXIT_SUCCESS)
+    }
   }
   
   private func createJSONObject() -> [String : AnyObject] {
@@ -203,6 +205,10 @@ import UIKit
       if let data = self.datas[key] {
         res[key] = data
       }
+      else {
+        res[key] = ""
+      }
+      
     }
     return res
   }
@@ -234,17 +240,12 @@ import UIKit
         .responseJSON { response in
           
           switch response.result {
-          case .Success(let JSON):
-            
-            if JSON["status"] as? String == "success" {
-              
-              if self.killApp == true {
-                self.killAppNow()
-              }
-            }
+          case .Success(_):
+            self.killAppNow()
             
           case .Failure(let error):
             print("Request failed with error: \(error)")
+            self.killAppNow()
           }
       }
     }
