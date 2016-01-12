@@ -1,10 +1,9 @@
-//
-//  CondomSDK.swift
-//  CondomSDK
-//
-//  Created by Xavier De Koninck on 22/12/2015.
-//  Copyright © 2015 PagesJaunes. All rights reserved.
-//
+/*
+* Copyright (C) PagesJaunes, SoLocal Group - All Rights Reserved.
+*
+* Unauthorized copying of this file, via any medium is strictly prohibited.
+* Proprietary and confidential.
+*/
 
 import Foundation
 import UIKit
