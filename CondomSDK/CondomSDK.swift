@@ -18,6 +18,7 @@ import UIKit
   
   private lazy var datas: [String: String] = [String: String]()
   private var timer: NSTimer?
+  private var timeoutTimer: NSTimer?
   
   private var testingEnable: Bool = false
   private var idTest: String?
@@ -164,7 +165,7 @@ import UIKit
     
     if let timeout = self.timeout {
         
-        NSTimer.scheduledTimerWithTimeInterval(timeout, target: self, selector: "sendDatas", userInfo: nil, repeats: false)
+      self.timeoutTimer = NSTimer.scheduledTimerWithTimeInterval(timeout, target: self, selector: "sendDatas", userInfo: nil, repeats: false)
     }
   }
   
@@ -174,6 +175,10 @@ import UIKit
   }
   
   private func killAppNow() {
+    
+    if let timeoutTimer = self.timeoutTimer {
+      timeoutTimer.invalidate()
+    }
 
     if self.killApp == true {
       
