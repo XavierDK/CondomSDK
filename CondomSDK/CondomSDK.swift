@@ -224,7 +224,7 @@ import UIKit
     
     if self.expectedKeys.contains(self.topScreenNameKey) {
       
-      let topController : UIViewController? = self.topMostController()
+      let topController : UIViewController? = self.topMostController(UIApplication.sharedApplication().keyWindow?.rootViewController)
       if let topController = topController {
         datas[self.topScreenNameKey] = NSStringFromClass(topController.dynamicType)
       }
@@ -269,16 +269,23 @@ import UIKit
     return image;
   }
   
-  private func topMostController() -> UIViewController?
+  private func topMostController(var rootViewController: UIViewController?) -> UIViewController?
   {
-    var topController = UIApplication.sharedApplication().keyWindow?.rootViewController;
+//    var topController = UIApplication.sharedApplication().keyWindow?.rootViewController;
     
-    if let nvc = topController as? UINavigationController {
-      topController = nvc.viewControllers.last
+//    var rootViewController = rootViewController
+    
+    if let nvc = rootViewController as? UINavigationController {
+      rootViewController = nvc.viewControllers.last
     }
-    while (topController?.presentedViewController != nil) {
-      topController = topController?.presentedViewController
+    while (rootViewController?.presentedViewController != nil) {
+      rootViewController = rootViewController?.presentedViewController
     }
-    return topController;
+    
+    if let nvc = rootViewController as? UINavigationController {
+      rootViewController = self.topMostController(nvc)
+    }
+    
+    return rootViewController;
   }
 }
