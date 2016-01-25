@@ -180,11 +180,8 @@ import UIKit
       timeoutTimer.invalidate()
     }
 
-    if self.killApp == true {
-      
-      dispatch_async(dispatch_get_main_queue(), { () -> Void in
-        exit(EXIT_SUCCESS);
-      });
+    if self.killApp == true {      
+      exit(EXIT_SUCCESS);
     }
   }
   
@@ -271,10 +268,6 @@ import UIKit
   
   private func topMostController(var rootViewController: UIViewController?) -> UIViewController?
   {
-//    var topController = UIApplication.sharedApplication().keyWindow?.rootViewController;
-    
-//    var rootViewController = rootViewController
-    
     if let nvc = rootViewController as? UINavigationController {
       rootViewController = nvc.viewControllers.last
     }
